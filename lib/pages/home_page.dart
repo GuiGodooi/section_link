@@ -8,7 +8,26 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          _Menu(),
+          const _Menu(),
+          Expanded(
+            child: PageView(
+              scrollDirection: Axis.vertical,
+              children: [
+                Container(
+                  color: Colors.red,
+                  height: 500,
+                ),
+                Container(
+                  color: Colors.blueAccent,
+                  height: 500,
+                ),
+                Container(
+                  color: Colors.yellow,
+                  height: 500,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
