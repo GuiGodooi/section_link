@@ -1,29 +1,44 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          const _Menu(),
+          _Menu(
+            (section) {
+              _pageController.animateToPage(
+                section,
+                duration: const Duration(
+                  milliseconds: 500,
+                ),
+                curve: Curves.ease,
+              );
+            },
+          ),
           Expanded(
             child: PageView(
+              controller: _pageController,
               scrollDirection: Axis.vertical,
-              children: [
-                Container(
-                  color: Colors.red,
-                  height: 500,
-                ),
-                Container(
-                  color: Colors.blueAccent,
-                  height: 500,
-                ),
-                Container(
+              children: const [
+                _Section(
                   color: Colors.yellow,
-                  height: 500,
+                ),
+                _Section(
+                  color: Colors.red,
+                ),
+                _Section(
+                  color: Colors.purple,
                 ),
               ],
             ),
@@ -34,8 +49,12 @@ class HomePage extends StatelessWidget {
   }
 }
 
+typedef SectionCallback = void Function(int);
+
 class _Menu extends StatelessWidget {
-  const _Menu();
+  final SectionCallback sectionClick;
+
+  const _Menu(this.sectionClick);
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +64,38 @@ class _Menu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              sectionClick(0);
+            },
             child: const Text('Section 1'),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              sectionClick(1);
+            },
             child: const Text('Section 2'),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              sectionClick(2);
+            },
             child: const Text('Section 3'),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _Section extends StatelessWidget {
+  final Color color;
+  const _Section({required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+      height: 1000,
     );
   }
 }
