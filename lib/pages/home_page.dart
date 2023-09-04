@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
             child: PageView(
               controller: _pageController,
               scrollDirection: Axis.vertical,
+              pageSnapping: false,
               children: const [
                 _Section(
                   color: Colors.yellow,
